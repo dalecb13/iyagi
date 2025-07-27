@@ -2,3 +2,50 @@
 
 */.venv
 */__pycache__
+
+# General coding
+
+*/.env
+
+
+# Web App
+
+# dependencies
+web-app/node_modules
+web-app/.pnp
+web-app/.pnp.*
+web-app/.yarn/*
+web-app/!.yarn/patches
+web-app/!.yarn/plugins
+web-app/!.yarn/releases
+web-app/!.yarn/versions
+
+# testing
+web-app/coverage
+
+# next.js
+web-app/.next/
+web-app/out/
+
+# production
+web-app/build
+
+# misc
+**/.DS_Store
+**/*.pem
+
+# debug
+web-app/npm-debug.log*
+web-app/yarn-debug.log*
+web-app/yarn-error.log*
+web-app/.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+**/.env*
+
+# vercel
+web-app/.vercel
+
+# typescript
+web-app/*.tsbuildinfo
+web-app/next-env.d.ts
