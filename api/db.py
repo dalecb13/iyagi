@@ -1,5 +1,4 @@
 from sqlmodel import SQLModel, create_engine
-from models import models
 
 sqlite_file_name = "iyagi.db"
 sqlite_url = f"sqlite:///{sqlite_file_name}"
