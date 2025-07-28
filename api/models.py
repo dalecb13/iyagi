@@ -20,6 +20,3 @@ class AccountPublic(AccontBase):
 
 class AccountUpdate(SQLModel):
     password: str | None = None
-
-
-SQLModel.metadata.create_all(engine)
