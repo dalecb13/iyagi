@@ -6,12 +6,20 @@ import { Plus } from "lucide-react"
 import EditableTitle from "./editable-title";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Page } from "@/lib/models";
 
 const StoryCreator = () => {
   const initialTitle = 'New Story';
   const [storyName, setStoryName] = React.useState("");
 
-  
+  const [pages, setPages] = React.useState<Page[]>([]);
+
+  const handleAddPage = () => {
+    // if last page is not empty, add a new page
+    if (pages.length > 0 && pages[pages.length - 1].contents !== "") {
+      setPages([...pages, { contents: "" }]);
+    }
+  }
 
   return (
     <div className="flex flex-row h-screen">
@@ -34,9 +42,18 @@ const StoryCreator = () => {
             variant="secondary"
             size="icon"
             className="size-8"
+            onClick={handleAddPage}
           >
             <Plus />
           </Button>
+        </div>
+
+        <div className="px-4">
+          {pages.map((page, index) => (
+            <div key={index}>
+              <p>Page {index + 1}</p>
+            </div>
+          ))}
         </div>
       </div>
 

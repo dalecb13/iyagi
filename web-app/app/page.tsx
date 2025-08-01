@@ -1,5 +1,4 @@
-import Footer from "./ui/footer";
-import StoryCreator from "./ui/story-creator";
+import StoryCreator from "../components/story-creator";
 
 export default function Home() {
   return (
