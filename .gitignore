@@ -10,7 +10,7 @@ sqlite-db
 # General coding
 
 */.env
-
+api/*.db
 
 # Web App
 
