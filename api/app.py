@@ -5,7 +5,7 @@ from typing import Union
 
 from fastapi import FastAPI
 from pydantic import BaseModel
-from models import Account, AccountCreate, AccountPublic
+from models import Account, AccountCreate, AccountPublic, Story
 
 app = FastAPI()
 
@@ -42,3 +42,8 @@ def create_account(account: AccountCreate):
         session.commit()
         session.refresh(db_account)
         return db_account
+
+
+@app.post("/story", response_model=list[Story])
+def read_stories():
+    return
