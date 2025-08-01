@@ -1,6 +1,8 @@
-from typing import Optional, Dict, Any
-from sqlmodel import Field, SQLModel, create_engine
-from sqlalchemy.dialects.postgresql import JSONB
+from typing import Dict, Any
+from sqlmodel import Field, SQLModel
+from sqlalchemy import Column
+from sqlalchemy.types import JSON
+from sqlalchemy.ext.mutable import MutableDict
 
 class AccontBase(SQLModel):
     email: str = Field(default=None, unique=True, index=True)
@@ -28,8 +30,7 @@ class AccountUpdate(SQLModel):
 
 class StoryBase(SQLModel):
     title: str
-    content: dict
 
 class Story(StoryBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    content: Dict[str, Any] = Field(default_factory=dict, sa_column_kwargs={"type": JSONB})
+    content: Dict[str, Any] = Field(sa_type=JSON)
