@@ -7,6 +7,7 @@ import EditableTitle from "./editable-title";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Page } from "@/lib/models";
+import PageMenuItem from "./page-menu-item";
 
 const StoryCreator = () => {
   const initialTitle = 'New Story';
@@ -17,14 +18,20 @@ const StoryCreator = () => {
   const handleAddPage = () => {
     // if last page is not empty, add a new page
     if (pages.length > 0 && pages[pages.length - 1].contents !== "") {
-      setPages([...pages, { contents: "" }]);
+      setPages([...pages, { contents: "", pageName: `Page ${pages.length + 1}` }]);
       return;
     }
 
     if (!pages || pages.length === 0) {
-      setPages([{ contents: "" }]);
+      setPages([{ contents: "", pageName: "Page 1" }]);
       return;
     }
+  }
+
+  const handlePageNameChange = (pageName: string, index: number) => {
+    const newPages = [...pages];
+    newPages[index].pageName = pageName;
+    setPages(newPages);
   }
 
   return (
@@ -56,12 +63,11 @@ const StoryCreator = () => {
 
         <div className="px-2">
           {pages.map((page, index) => (
-            <div
+            <PageMenuItem
               key={index}
-              className="cursor-pointer hover:bg-gray-200 py-2 px-2 rounded-md mb-2"
-            >
-              <p>Page {index + 1}</p>
-            </div>
+              pageName={page.pageName}
+              onPageNameChange={(pageName) => handlePageNameChange(pageName, index)}
+            />
           ))}
         </div>
       </div>
