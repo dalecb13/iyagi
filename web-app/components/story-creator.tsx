@@ -8,12 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Page } from "@/lib/models";
 import PageMenuItem from "./page-menu-item";
+import StoryCreatorContent from "./story-creator-content";
 
 const StoryCreator = () => {
   const initialTitle = 'New Story';
   const [storyName, setStoryName] = React.useState("");
 
   const [pages, setPages] = React.useState<Page[]>([]);
+
+  const [renderedPage, setRenderedPage] = React.useState<Page>(pages[0]);
 
   const handleAddPage = () => {
     // if last page is not empty, add a new page
@@ -74,7 +77,9 @@ const StoryCreator = () => {
 
       <div className="grow flex justify-between items-center justify-cneter bg-gray-100 p-8">
         {/* Main content */}
-        <div className="p-8 bg-white rounded-2xl h-full w-full">Main content</div>
+        <div className="p-8 bg-white rounded-2xl h-full w-full">
+          <StoryCreatorContent page={renderedPage} />
+        </div>
       </div>
 
       {/* Right toolbar */}
