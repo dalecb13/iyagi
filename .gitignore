@@ -56,3 +56,7 @@ web-app/next-env.d.ts
 
 # deployment
 web-app/public
+
+
+# Data
+data
