@@ -1,6 +1,7 @@
 import { FileUploader } from "react-drag-drop-files";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { uploadAsset } from "@/app/api/assets.api";
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
@@ -8,12 +9,23 @@ const AssetsToolbar = () => {
   const [assets, setAssets] = useState<string[]>([]);
   const [file, setFile] = useState<File | File[] | null>(null);
 
-  const handleChange = (arg0: File | Array<File>) => {
+  const handleChange = async (arg0: File | Array<File>) => {
     setFile(arg0);
+
+    if (!arg0) {
+      return;
+    }
+
+    if (Array.isArray(arg0)) {
+      return;
+    }
+
+    const result = await uploadAsset(arg0 as File);
+    console.log('upload result', result);
   };
 
-  const handleUpload = () => {
-    console.log(file);
+  const handleUpload = async () => {
+    
   };
 
   return (

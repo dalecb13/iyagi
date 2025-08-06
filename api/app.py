@@ -52,10 +52,11 @@ def read_stories():
 @app.post('/assets')
 def upload_assets(file: Annotated[bytes, File()]):
     # Save file to database
-    with Session(engine) as session:
-        asset = AssetCreate(file=file)
-        session.add(asset)
-        session.commit()
+    print(f"saving asset to database: {file.title}")
+    # with Session(engine) as session:
+    #     asset = AssetCreate(file=file)
+    #     session.add(asset)
+    #     session.commit()
     return
 
 
