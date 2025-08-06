@@ -9,6 +9,6 @@ export type Page = {
 
 export type AssetListItem = {
   id: number;
-  // assetName: string;
+  assetName: string;
   location: string;
 }

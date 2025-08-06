@@ -91,3 +91,9 @@ def get_assets():
     with Session(engine) as session:
         assets = session.exec(select(Asset)).all()
         return assets
+
+@app.put('/assets/{id}')
+def update_asset(assetName: str):
+    with Session(engine) as session:
+        asset = session.exec(select(Asset).where(Asset.id == id)).first()
+        asset.assetName = assetName

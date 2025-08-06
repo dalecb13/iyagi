@@ -43,10 +43,12 @@ class Story(StoryBase, table=True):
 class Asset(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     location: str = Field(unique=True)
+    assetName: str | None = Field()
 
 class AssetListItems(Asset):
     id: int | None
     location: str
+    assetName: str | None
 
 # class AssetCreate(AssetBase):
 #     location: str
