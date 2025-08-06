@@ -34,3 +34,31 @@ class StoryBase(SQLModel):
 class Story(StoryBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     content: Dict[str, Any] = Field(sa_type=JSON)
+
+
+# Asset
+
+
+class AssetBase(SQLModel):
+    assetName: str
+
+class Asset(AssetBase, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    # Create a column for storing files as blob
+    file: bytes = Field()
+
+
+class AssetCreate(AssetBase):
+    assetName: str
+    file: bytes = Field()
+
+
+class AssetPublic(AssetBase):
+    id: int
+    file: bytes = Field()
+    assetName: str
+
+
+class AssetUpdate(SQLModel):
+    file: bytes | None = None
+

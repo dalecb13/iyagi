@@ -1,11 +1,11 @@
-from db import create_db_and_tables, engine, SQLModel
+from db import create_db_and_tables, engine
 from sqlmodel import Session, select
 
-from typing import Union
+from typing import Union, Annotated
 
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from pydantic import BaseModel
-from models import Account, AccountCreate, AccountPublic, Story
+from models import Account, AccountCreate, AccountPublic, AssetCreate, Story
 
 app = FastAPI()
 
@@ -46,4 +46,19 @@ def create_account(account: AccountCreate):
 
 @app.post("/story", response_model=list[Story])
 def read_stories():
+    return
+
+
+@app.post('/assets')
+def upload_assets(file: Annotated[bytes, File()]):
+    # Save file to database
+    with Session(engine) as session:
+        asset = AssetCreate(file=file)
+        session.add(asset)
+        session.commit()
+    return
+
+
+@app.get('/assets')
+def get_assets(file: UploadFile):
     return
