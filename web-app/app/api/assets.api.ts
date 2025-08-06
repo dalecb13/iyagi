@@ -1,18 +1,19 @@
 
-export const uploadAsset = async (file: File) => {
-  const formData = new FormData();
+type CreateAssetResponse = {
+  id: number
+  assetName: string
+}
 
-  formData.append('asset', file);
-
-  // use fetch to send the form data to the server
-  const response = await fetch('http://localhost:8000/assets', {
-    method: 'POST',
-    body: formData,
-  });
-  const data = await response.json();
-  // const err = null;
-
-  return {
-    data,
-  };
+export const uploadAsset = async (formData: FormData): Promise<CreateAssetResponse> => {
+  try {
+    const response = await fetch('http://localhost:8000/assets', {
+      method: 'POST',
+      body: formData,
+    });
+    const data: CreateAssetResponse = await response.json();
+    return data;
+  } catch (err) {
+    console.warn(err);
+    throw err; // throws 500
+  }
 }

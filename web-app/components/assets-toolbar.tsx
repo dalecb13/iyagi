@@ -2,6 +2,7 @@ import { FileUploader } from "react-drag-drop-files";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { uploadAsset } from "@/app/api/assets.api";
+import { toast } from "sonner"
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
@@ -20,12 +21,17 @@ const AssetsToolbar = () => {
       return;
     }
 
-    const result = await uploadAsset(arg0 as File);
-    console.log('upload result', result);
+    setFile(arg0);
   };
 
-  const handleUpload = async () => {
-    
+  const handleUpload = async (formData: FormData) => {
+    try {
+      const result = await uploadAsset(formData);
+      toast(`${result.assetName} uploaded successfully`);
+    } catch(err) {
+      console.warn(err);
+      toast("Failed to upload asset");
+    }
   };
 
   return (
@@ -51,15 +57,20 @@ const AssetsToolbar = () => {
       </div>
 
       <div className="">
-        <FileUploader handleChange={handleChange} name="file" types={fileTypes} />
-        <Button
-          className="mt-2"
-          onClick={handleUpload}
-          disabled={!file}
-          size="sm"
-        >
-          Upload
-        </Button>
+        {/* <FileUploader handleChange={handleChange} name="file" types={fileTypes} /> */}
+        {/* FormHTMLAttributes<HTMLFormElement>.action?: string | ((formData: FormData) => void | Promise<void>) | undefined */}
+        <form action={handleUpload} className="flex flex-col">
+          <label htmlFor="file">Upload a file:</label>
+          <input type="file" id="file" name="file" />
+          <Button
+            className="mt-2"
+            type="submit"
+            id="file"
+            size="sm"
+          >
+            Upload
+          </Button>
+        </form>
       </div>
     </div>
   )

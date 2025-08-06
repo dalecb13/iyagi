@@ -1,8 +1,6 @@
 from typing import Dict, Any
 from sqlmodel import Field, SQLModel
-from sqlalchemy import Column
 from sqlalchemy.types import JSON
-from sqlalchemy.ext.mutable import MutableDict
 
 class AccontBase(SQLModel):
     email: str = Field(default=None, unique=True, index=True)
@@ -39,26 +37,16 @@ class Story(StoryBase, table=True):
 # Asset
 
 
-class AssetBase(SQLModel):
-    assetName: str
+# class AssetBase(SQLModel):
+#     location: str
 
-class Asset(AssetBase, table=True):
+class Asset(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    # Create a column for storing files as blob
-    file: bytes = Field()
+    location: str = Field(unique=True)
 
+# class AssetCreate(AssetBase):
+#     location: str
 
-class AssetCreate(AssetBase):
-    assetName: str
-    file: bytes = Field()
-
-
-class AssetPublic(AssetBase):
-    id: int
-    file: bytes = Field()
-    assetName: str
-
-
-class AssetUpdate(SQLModel):
-    file: bytes | None = None
-
+# class AssetPublic(AssetBase):
+#     id: int
+#     location: str
