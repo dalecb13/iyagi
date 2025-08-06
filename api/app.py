@@ -7,7 +7,7 @@ from typing import Union, Annotated
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from models import Account, AccountCreate, AccountPublic, Asset, Story
+from models import Account, AccountCreate, AccountPublic, Asset, AssetListItems, Story
 
 FILE_DIR = "./assets"
 
@@ -88,4 +88,6 @@ def upload_assets(file: UploadFile):
 
 @app.get('/assets')
 def get_assets():
-    return
+    with Session(engine) as session:
+        assets = session.exec(select(Asset)).all()
+        return assets

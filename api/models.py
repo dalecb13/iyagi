@@ -44,6 +44,10 @@ class Asset(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     location: str = Field(unique=True)
 
+class AssetListItems(Asset):
+    id: int | None
+    location: str
+
 # class AssetCreate(AssetBase):
 #     location: str
 

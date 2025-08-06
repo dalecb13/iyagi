@@ -1,14 +1,24 @@
 import { FileUploader } from "react-drag-drop-files";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { uploadAsset } from "@/app/api/assets.api";
+import { getAllAssets, uploadAsset } from "@/app/api/assets.api";
 import { toast } from "sonner"
+import { AssetListItem } from "@/lib/models";
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
 const AssetsToolbar = () => {
-  const [assets, setAssets] = useState<string[]>([]);
+  const [assets, setAssets] = useState<AssetListItem[]>([]);
   const [file, setFile] = useState<File | File[] | null>(null);
+
+  useEffect(() => {
+    const fetchAssets = async () => {
+      const assets = await getAllAssets();
+      setAssets(assets);
+    }
+
+    fetchAssets();
+  }, [])
 
   const handleChange = async (arg0: File | Array<File>) => {
     setFile(arg0);
@@ -48,7 +58,7 @@ const AssetsToolbar = () => {
               : <div>
                   {
                     assets.map(asset => {
-                      return <p key={asset}>{asset}</p>
+                      return <p key={asset.id}>{asset.location}</p>
                     })
                   }
                 </div>

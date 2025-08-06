@@ -6,3 +6,9 @@ export type Page = {
   "16x9": string | null;
   "16x10": string | null;
 }
+
+export type AssetListItem = {
+  id: number;
+  // assetName: string;
+  location: string;
+}
