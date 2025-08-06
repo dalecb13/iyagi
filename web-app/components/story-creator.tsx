@@ -11,6 +11,7 @@ import PageMenuItem from "./page-menu-item";
 import StoryCreatorContent from "./story-creator-content";
 import { newPage } from "@/lib/utils";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import AssetsToolbar from "./assets-toolbar";
 
 const StoryCreator = () => {
   const initialTitle = 'New Story';
@@ -90,7 +91,7 @@ const StoryCreator = () => {
               ? 'aspect-[16/9]'
               : 'aspect-[16/10]'
         }`}>
-          <StoryCreatorContent page={renderedPage} />
+          <StoryCreatorContent page={renderedPage} aspectRatio={aspectRatio} />
         </div>
 
         {/* Aspect Ratio Controls */}
@@ -107,7 +108,7 @@ const StoryCreator = () => {
 
       {/* Right toolbar */}
       <div className="flex-none flex bg-gray-50 p-8">
-        <h1>Right toolbar</h1>
+        <AssetsToolbar />
       </div>
     </div>
   )
