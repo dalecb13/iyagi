@@ -50,6 +50,9 @@ class AssetListItems(Asset):
     location: str
     assetName: str | None
 
+class AssetRename(Asset):
+    assetName: str
+
 # class AssetCreate(AssetBase):
 #     location: str
 

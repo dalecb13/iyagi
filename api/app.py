@@ -4,10 +4,10 @@ from sqlmodel import Session, select
 
 from typing import Union, Annotated
 
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, Path, UploadFile, Body
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from models import Account, AccountCreate, AccountPublic, Asset, AssetListItems, Story
+from models import Account, AccountCreate, AccountPublic, Asset, AssetListItems, AssetRename, Story
 
 FILE_DIR = "./assets"
 
@@ -92,8 +92,19 @@ def get_assets():
         assets = session.exec(select(Asset)).all()
         return assets
 
-@app.put('/assets/{id}')
-def update_asset(assetName: str):
+@app.put('/assets/{asset_id}')
+async def update_asset(asset_id: int, assetName: Annotated[str, Body()]):
     with Session(engine) as session:
-        asset = session.exec(select(Asset).where(Asset.id == id)).first()
+        statement = select(Asset).where(Asset.id == asset_id)
+        asset = session.exec(statement).first()
+        
         asset.assetName = assetName
+        session.add(asset)
+        session.commit()
+        session.refresh(asset)
+
+        return asset
+    return
+
+
+

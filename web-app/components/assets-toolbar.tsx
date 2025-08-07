@@ -5,16 +5,15 @@ import { getAllAssets, renameAsset, uploadAsset } from "@/app/api/assets.api";
 import { toast } from "sonner"
 import { AssetListItem } from "@/lib/models";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Plus } from "lucide-react"
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
@@ -66,7 +65,8 @@ const AssetsToolbar = () => {
           {
             !assets || assets.length === 0
               ? <div className="flex items-center justify-center">
-                  <p>No assets found! Add one below</p>
+                  <p>No assets found!</p>
+                  <p>Add one below</p>
                 </div>
               : <div>
                   {
@@ -80,37 +80,38 @@ const AssetsToolbar = () => {
       </div>
 
       <div className="">
-        <AlertDialog>
-          <AlertDialogTrigger>
+        <Dialog>
+          <DialogTrigger>
             <Button size="lg">
               <Plus />
               Add Asset
             </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Add Asset</AlertDialogTitle>
-              <AlertDialogDescription>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add Asset</DialogTitle>
+              <DialogDescription>
                 Choose a file to upload as an Asset
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-
-            <form action={handleUpload} className="flex flex-col">
-              <label htmlFor="file">Upload a file:</label>
-              <input type="file" id="file" name="file" />
-              <Button
-                className="mt-2"
-                type="submit"
-                id="file"
-                size="sm"
-              >
-                Upload
-              </Button>
-            </form>
+              </DialogDescription>
+            </DialogHeader>
 
             {
-              uploadedId
-                ? <div className="flex flex-col gap-4">
+              !uploadedId
+                ?
+                  <form action={handleUpload} className="flex flex-col">
+                    <label htmlFor="file">Upload a file:</label>
+                    <input type="file" id="file" name="file" />
+                    <Button
+                      className="mt-2"
+                      type="submit"
+                      id="file"
+                      size="sm"
+                    >
+                      Upload
+                    </Button>
+                  </form>
+                :
+                  <div className="flex flex-col gap-4">
                     <Label htmlFor="assetName">Asset Name</Label>
                     <Input
                       id="assetName"
@@ -125,15 +126,14 @@ const AssetsToolbar = () => {
                       Set Asset Name
                     </Button>
                   </div>
-                : null
             }
 
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <DialogFooter>
+              <DialogClose>Cancel</DialogClose>
               {/* <AlertDialogAction>Continue</AlertDialogAction> */}
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   )
