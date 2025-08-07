@@ -64,9 +64,9 @@ const AssetsToolbar = () => {
         <div>
           {
             !assets || assets.length === 0
-              ? <div className="flex items-center justify-center">
+              ? <div className="flex flex-col items-center justify-center">
                   <p>No assets found!</p>
-                  <p>Add one below</p>
+                  <p>Add one below?</p>
                 </div>
               : <div>
                   {
@@ -81,10 +81,14 @@ const AssetsToolbar = () => {
 
       <div className="">
         <Dialog>
-          <DialogTrigger>
-            <Button size="lg">
+          <DialogTrigger asChild>
+            <Button
+              className="flex items-center gap-2 p-2 rounded-md hover:cursor-pointer hover:bg-gray-500"
+            >
+            {/* <div className="flex items-center gap-2 p-2 rounded-md hover:cursor-pointer hover:bg-gray-200"> */}
               <Plus />
-              Add Asset
+              <p>Add Asset</p>
+            {/* </div> */}
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -129,7 +133,7 @@ const AssetsToolbar = () => {
             }
 
             <DialogFooter>
-              <DialogClose>Cancel</DialogClose>
+              {/* <DialogClose>Cancel</DialogClose> */}
               {/* <AlertDialogAction>Continue</AlertDialogAction> */}
             </DialogFooter>
           </DialogContent>
