@@ -5,7 +5,9 @@ from sqlmodel import Session, select
 from typing import Union, Annotated
 
 from fastapi import FastAPI, Path, UploadFile, Body
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from models import Account, AccountCreate, AccountPublic, Asset, AssetListItems, AssetRename, Story
 
@@ -26,6 +28,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/assets", StaticFiles(directory="assets"), name="assets")
+
 
 @app.on_event("startup")
 def on_startup():
@@ -90,7 +95,11 @@ def upload_assets(file: UploadFile):
 def get_assets():
     with Session(engine) as session:
         assets = session.exec(select(Asset)).all()
-        return assets
+        returnedAssets = []
+        for asset in assets:
+            returnedAsset = AssetListItems(id=asset.id, location=asset.location, assetName=asset.assetName)
+            returnedAssets.append(returnedAsset)
+        return returnedAssets
 
 @app.put('/assets/{asset_id}')
 async def update_asset(asset_id: int, assetName: Annotated[str, Body()]):
@@ -107,4 +116,6 @@ async def update_asset(asset_id: int, assetName: Annotated[str, Body()]):
     return
 
 
-
+@app.get('/asset_image/{image_name}')
+def get_asset_image(image_name: str):
+    return FileResponse(f"assets/{image_name}")

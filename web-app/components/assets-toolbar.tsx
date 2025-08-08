@@ -17,6 +17,7 @@ import {
 import { Plus } from "lucide-react"
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import Image from 'next/image';
 
 const fileTypes = ["JPG", "PNG", "GIF"];
 
@@ -71,7 +72,16 @@ const AssetsToolbar = () => {
               : <div>
                   {
                     assets.map(asset => {
-                      return <p key={asset.id}>{asset.assetName}</p>
+                      console.log(asset)
+                      return <div key={asset.id} className="flex gap-2">
+                        <Image
+                          src={`http://localhost:8000/asset_image/${asset.id}/`}
+                          alt="Description of the image"
+                          width={64} // Required for remote images to prevent layout shift
+                          height={64} // Required for remote images to prevent layout shift
+                        />
+                        <p>{asset.assetName}</p>
+                      </div>
                     })
                   }
                 </div>
@@ -85,10 +95,8 @@ const AssetsToolbar = () => {
             <Button
               className="flex items-center gap-2 p-2 rounded-md hover:cursor-pointer hover:bg-gray-500"
             >
-            {/* <div className="flex items-center gap-2 p-2 rounded-md hover:cursor-pointer hover:bg-gray-200"> */}
               <Plus />
               <p>Add Asset</p>
-            {/* </div> */}
             </Button>
           </DialogTrigger>
           <DialogContent>
